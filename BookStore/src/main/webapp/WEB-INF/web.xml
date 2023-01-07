@@ -1,13 +1,16 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>BookStore</display-name>
   
+  	<!-- 톰캣, 세션등이 실행,끝날 때 이벤트 지정 -->
 	<listener>
 	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+	<!-- 기본적으로 하나의 xml만 설정가능한데 여러개 하고 싶을 때 -->
 	<context-param>
 	    <param-name>contextConfigLocation</param-name>
+	    <!-- Spring.xml 설정파일의 위치 -->
 	    <param-value>classpath:spring-context.xml</param-value>
+	    <!-- <param-value>xxx.xml</param-value> -->
 	</context-param>
 	
 	<servlet>
@@ -17,14 +20,21 @@
 	        <param-name>contextConfigLocation</param-name>
 	        <param-value></param-value>
 	    </init-param>
+	    <!-- 톰캣이 실행될 때 서비스를 로드하고 싶다! -->
+	    <!-- 요청이 올 때 메모리에 올라가는데 처음 불러올때 느리게 느껴질 수 있기 때문에 설정해주면 좋다. -->
+	    <!-- 1,2,3... 우선순위 설정 가능 -->
 	    <load-on-startup>1</load-on-startup>
+	    <!-- 비동기적으로 로드되는 걸 원하면 설정 -->
+	    <async-supported>true</async-supported>
 	</servlet>
-
+	
+	<!-- 어느 요청에 응답할 것인가. -->
 	<servlet-mapping>
 	    <servlet-name>app</servlet-name>
 	    <url-pattern>/</url-pattern>
 	</servlet-mapping>
  
+ 	<!-- 인코딩 필터 -->
 	<filter> 
 	  <filter-name>encodingFilter</filter-name> 
 	  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
